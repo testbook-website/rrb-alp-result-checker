@@ -31,7 +31,7 @@ def main():
     data_dir = os.path.join(workspace, "data")
     os.makedirs(data_dir, exist_ok=True)
     
-    zones = ["Ahmedabad", "Bilaspur", "Bhubaneshwar", "Chandigarh", "Chennai", "Gorakhpur", "Jammu", "Kolkata", "Malda", "Patna", "Prayagraj", "Ranchi", "Secunderabad", "Siliguri"]
+    zones = ["Ahmedabad", "Bilaspur", "Bhubaneshwar", "Chandigarh", "Chennai", "Gorakhpur", "Jammu", "Kolkata", "Malda", "Mumbai", "Patna", "Prayagraj", "Ranchi", "Secunderabad", "Siliguri"]
     results = {}
     
     total_extracted = 0
