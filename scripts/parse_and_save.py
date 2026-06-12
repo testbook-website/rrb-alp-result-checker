@@ -11,14 +11,17 @@ def extract_roll_numbers_from_pdf(pdf_path):
     print(f"Parsing {pdf_path}...")
     try:
         reader = pypdf.PdfReader(pdf_path)
-        digits_pattern = re.compile(r'\b\d{16}\b')
         roll_numbers = set()
         
         for page_num, page in enumerate(reader.pages):
             text = page.extract_text()
             if text:
-                matches = digits_pattern.findall(text)
-                roll_numbers.update(matches)
+                # Find all continuous sequences of digits
+                for word in re.findall(r'\d+', text):
+                    if len(word) >= 16:
+                        # Extract non-overlapping 16-digit chunks
+                        for i in range(0, len(word) - len(word) % 16, 16):
+                            roll_numbers.add(word[i:i+16])
                 
         print(f"Extracted {len(roll_numbers)} unique roll numbers from {pdf_path}.")
         return sorted(list(roll_numbers))
@@ -31,7 +34,7 @@ def main():
     data_dir = os.path.join(workspace, "data")
     os.makedirs(data_dir, exist_ok=True)
     
-    zones = ["Ahmedabad", "Bilaspur", "Bhopal", "Bhubaneshwar", "Chandigarh", "Chennai", "Gorakhpur", "Guwahati", "Jammu", "Kolkata", "Malda", "Mumbai", "Patna", "Prayagraj", "Ranchi", "Secunderabad", "Siliguri"]
+    zones = ["Ahmedabad", "Bilaspur", "Bhopal", "Bhubaneshwar", "Chandigarh", "Chennai", "Gorakhpur", "Guwahati", "Jammu", "Kolkata", "Malda", "Mumbai", "Patna", "Prayagraj", "Ranchi", "Secunderabad", "Siliguri", "Thiruvananthapuram"]
     results = {}
     
     total_extracted = 0
