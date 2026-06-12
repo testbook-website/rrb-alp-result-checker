@@ -31,19 +31,21 @@ def main():
     data_dir = os.path.join(workspace, "data")
     os.makedirs(data_dir, exist_ok=True)
     
-    zones = ["Ahmedabad", "Chennai", "Gorakhpur", "Prayagraj", "Secunderabad", "Siliguri"]
+    zones = ["Ahmedabad", "Bilaspur", "Chennai", "Gorakhpur", "Kolkata", "Prayagraj", "Ranchi", "Secunderabad", "Siliguri"]
     results = {}
     
     total_extracted = 0
     for zone in zones:
-        pdf_name = f"{zone}.pdf"
-        pdf_path = os.path.join(workspace, pdf_name)
+        pdf_path = os.path.join(workspace, f"{zone}.pdf")
+        if not os.path.exists(pdf_path):
+            pdf_path = os.path.join(workspace, f"{zone.lower()}.pdf")
+            
         if os.path.exists(pdf_path):
             roll_list = extract_roll_numbers_from_pdf(pdf_path)
             results[zone] = roll_list
             total_extracted += len(roll_list)
         else:
-            print(f"Warning: PDF file for zone {zone} not found at {pdf_path}")
+            print(f"Warning: PDF file for zone {zone} not found (checked {zone}.pdf and {zone.lower()}.pdf)")
             
     output_path = os.path.join(data_dir, "roll_numbers.json")
     with open(output_path, "w", encoding="utf-8") as f:
