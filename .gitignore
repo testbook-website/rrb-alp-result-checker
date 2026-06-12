@@ -1,0 +1,5 @@
+.gemini/
+.system_generated/
+*.log
+# If you don't want the raw PDFs on GitHub, uncomment the next line:
+# *.pdf

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RRB ALP CBT-1 Result Checker</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="widget-container">
+    <div class="result-card" id="checkerCard">
+      <!-- Header -->
+      <div class="card-header">
+        <div class="badge">CEN 01/2025</div>
+        <h1>RRB ALP Result Checker</h1>
+        <p class="subtitle">CBT-1 Qualified Candidates Status</p>
+      </div>
+
+      <!-- Checker Form -->
+      <form id="checkerForm" class="card-body active-state">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your full name" required autocomplete="name">
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" placeholder="10-digit mobile number" required pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel">
+          </div>
+          
+          <div class="input-group">
+            <label for="zone">Select Zone</label>
+            <div class="select-wrapper">
+              <select id="zone" required>
+                <option value="" disabled selected>Select Zone</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Gorakhpur">Gorakhpur</option>
+                <option value="Prayagraj">Prayagraj</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="rollNumber">Roll Number (16 Digits)</label>
+          <input type="text" id="rollNumber" placeholder="Enter 16-digit Roll Number" required pattern="\d{16}" maxlength="16" autocomplete="off">
+          <span class="input-help">Verify your 16-digit roll number from your admit card.</span>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span>Check Qualification Status</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <!-- Loading State -->
+      <div id="loaderState" class="loading-state card-body">
+        <div class="spinner-wrapper">
+          <div class="spinner"></div>
+          <div class="spinner-ring"></div>
+        </div>
+        <h3>Checking Roll Number</h3>
+        <p>Searching lists and recording response...</p>
+      </div>
+
+      <!-- Success / Qualified State -->
+      <div id="qualifiedState" class="result-state card-body">
+        <div class="result-icon success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <h2 class="status-title success-text">Congratulations!</h2>
+        <p class="status-message">You have qualified for the next stage of the RRB ALP (CBT-2) examination.</p>
+        
+        <div class="candidate-details">
+          <div class="detail-row"><span>Candidate Name</span><strong id="resQualName">-</strong></div>
+          <div class="detail-row"><span>Roll Number</span><strong id="resQualRoll">-</strong></div>
+          <div class="detail-row"><span>Zone Selected</span><strong id="resQualZone">-</strong></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetForm()">Check Another Roll Number</button>
+      </div>
+
+      <!-- Failure / Not Qualified State -->
+      <div id="notQualifiedState" class="result-state card-body">
+        <div class="result-icon failure">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+        <h2 class="status-title failure-text">Not In The List</h2>
+        <p class="status-message">Your roll number was not found in the selected zone list of qualified candidates.</p>
+        
+        <div class="candidate-details">
+          <div class="detail-row"><span>Candidate Name</span><strong id="resFailName">-</strong></div>
+          <div class="detail-row"><span>Roll Number</span><strong id="resFailRoll">-</strong></div>
+          <div class="detail-row"><span>Zone Selected</span><strong id="resFailZone">-</strong></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetForm()">Check Another Roll Number</button>
+      </div>
+    </div>
+    
+    <!-- Footer / Branding -->
+    <div class="widget-footer">
+      Powered by RRB ALP Result Portal
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+  <!-- Script -->
+  <script src="app.js"></script>
+</body>
+</html>
